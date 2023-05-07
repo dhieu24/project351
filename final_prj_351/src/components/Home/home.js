@@ -1,10 +1,13 @@
 import React from "react";
+import Chart from "../Chart/chart";
 
 
 export default function Home(){
+    
     return(
         <div>
-            <h1>Login Successfully!</h1>
+            <Chart/>
         </div>
     );
+    
 }
