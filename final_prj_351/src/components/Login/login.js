@@ -7,7 +7,7 @@ import {Link, useNavigate, NavLink} from 'react-router-dom'
 export default function Login(){
     const {register, formState: {errors}, handleSubmit} = useForm({
         defaultValues: {
-            username: "",
+            email: "",
             password: "",
         },
         mode: onchange
@@ -17,18 +17,25 @@ export default function Login(){
 
     const onSubmit = async (values) => {
         console.log(values)
-        const {username, password} = values;
+        const {email, password} = values;
+        console.log(email)
+        console.log(password)
         try {
             const res = await axios({
                 url: 'http://localhost:8000/api/auth/login',
                 method: 'post',
                 data: {
-                    username,
+                    email,
                     password
                 }
             });
             if(res.data.success){
-                console.log(res.data)
+                const data = res.data
+                console.log(data)
+                localStorage.setItem('name', data.name);
+                localStorage.setItem('username', data.username);
+                localStorage.setItem('email', data.email);
+
                 navigate('/home')
             }
         } catch (error) {
@@ -48,10 +55,10 @@ export default function Login(){
                             <div className="mb-4">
                                 <div className="form-group">
                                     <input 
-                                        name="username" 
+                                        name="email" 
                                         placeholder="Enter your email"  
                                         className="form-control" 
-                                        {...register('username', {required: true})}>
+                                        {...register('email', {required: true})}>
                                     </input>
                                 </div>
                                 {errors?.username?.type === 'password' && <p>Username should be specified</p>}

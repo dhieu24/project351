@@ -7,7 +7,9 @@ import {Link, useNavigate, NavLink} from 'react-router-dom'
 export default function Login(){
     const {register, formState: {errors}, handleSubmit} = useForm({
         defaultValues: {
+            name: "",
             username: "",
+            email: "",
             password: "",
         },
         mode: onchange
@@ -17,13 +19,19 @@ export default function Login(){
 
     const onSubmit = async (values) => {
         console.log(values)
-        const {username, password} = values;
+        const {name, username, email, password} = values;
+        console.log(name)
+        console.log(username)
+        console.log(email)
+        console.log(password)
         try {
             const res = await axios({
                 url: 'http://localhost:8000/api/auth/register',
                 method: 'post',
                 data: {
+                    name,
                     username,
+                    email,
                     password
                 }
             });
@@ -47,11 +55,27 @@ export default function Login(){
                             <h4>Register</h4>
                             <div className="mb-4">
                                 <div className="form-group">
+                                    <input name="name" 
+                                        placeholder="Enter your Name" 
+                                        className="form-control" 
+                                        type="text"
+                                        {...register('name', {required: true})}>
+                                    </input>
+                                </div>
+                                <div className="form-group">
+                                    <input name="username" 
+                                        placeholder="Enter your Username" 
+                                        className="form-control" 
+                                        type="text" 
+                                        {...register('username', {required: true})}>
+                                    </input>
+                                </div>
+                                <div className="form-group">
                                     <input 
-                                        name="username" 
+                                        name="email" 
                                         placeholder="Enter your email"  
                                         className="form-control" 
-                                        {...register('username', {required: true})}>
+                                        {...register('email', {required: true})}>
                                     </input>
                                 </div>
                                 {errors?.username?.type === 'password' && <p>Username should be specified</p>}

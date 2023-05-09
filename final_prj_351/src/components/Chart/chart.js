@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 import axios from 'axios'
 
 
-export default function Chart(){
+export default function Chart(props){   
     const count = 30
     const priceStart = Array(count)
     .fill(150)
@@ -13,51 +13,53 @@ export default function Chart(){
     .fill(0)
     .map((value, index) => value + index);
 
+    const { stock } = props;
     const [data, setData] = React.useState({
         timestamp: timeStampStart,
         price: priceStart
     });
 
     React.useEffect(() => {
+      const fetchData = async () => {
+        console.log("? ")
+        console.log(data)
+  
+        try {
+          const res = await axios({
+            url: `http://localhost:8000/api/stock/test/${stock}`,
+            method: 'get',
+          });
+      
+          const result = res.data;
+          setData(prevData => {    
+            const newPriceData = 
+            result[0] != null ? prevData.price.slice(1).concat(result[0].currentPrice) : prevData.price
+            
+            return {
+              timestamp: prevData.timestamp,
+              price: newPriceData,
+            };
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      };
         fetchData();
-        const interval = setInterval(fetchData, 10000);
+        const interval = setInterval(fetchData, 5000);
         return () => {
           clearInterval(interval);
         };
-      });
-
-    const fetchData = async () => {
-      console.log("? ")
-      console.log(data)
-      try {
-        const res = await axios({
-          url: 'http://localhost:8000/api/stock/test/AAPL',
-          method: 'get',
-        });
-    
-        const result = res.data;
-        console.log(result[0])
-        setData(prevData => {    
-          const newPriceData = prevData.price.slice(-29).concat(result[0].currentPrice)
-          
-          return {
-            timestamp: prevData.timestamp,
-            price: newPriceData,
-          };
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    };
+      }, [stock]);
 
     return(
         <div>
+            <div></div>
             <Plot
-            data={[data]}
+            data={[{ x: data.timestamp, y: data.price, type: 'scatter', mode: 'lines' }]}
             layout={{
                 title: "Real-time Stock",
                 xaxis: { range: [0, 30] },
-                yaxis: { range: [150, 180] }
+                yaxis: { range: [data.price * 0.8, data.price * 1.2] }
             }}
             />
     </div>

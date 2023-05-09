@@ -1,0 +1,29 @@
+.user-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
+  .user-name {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-username,
+  .user-email {
+    font-size: 20px;
+    margin: 5px 0;
+  }
+  
+  .user-username strong,
+  .user-email strong {
+    margin-right: 10px;
+  }
