@@ -9,6 +9,20 @@ const getCompanyProfile = (req, res) => {
     try {
         const stockName = req.params.stockName
         console.log(stockName)
+        
+        const data = finnhubClient.companyProfile2({'symbol': stockName}, (error, data, response) => {
+
+            console.log(data)
+            res.send(data)
+        })
+    } catch (error) {
+        res.status(500).send('Error getting company profile');
+    }
+}
+
+const getPrediction = async (req, res) => {
+    try {
+        const stockName = req.params.stockName
         let {PythonShell} = require('python-shell')
         console.log("sai k")
         let pyshell = new PythonShell('C:/Users/DELL/project351/backend/chart/group_3_prediction_function.py')
@@ -18,38 +32,19 @@ const getCompanyProfile = (req, res) => {
             args: [stockName]
         };
         console.log("dmdmdmdm")
-        PythonShell.run('C:/Users/DELL/project351/backend/chart/group_3_prediction_function.py', options).then(results => {
-           console.log(results);
-
-
-             const data = finnhubClient.companyProfile2({'symbol': stockName}, (error, data, response) => {
-
-                const resData = {
-                    predictedPrice: results[1],
-                    ...data
-                }
-
-                console.log(resData)
-                // console.log(data)
-                res.send(resData)
-            });
+        PythonShell.run('C:/Users/CASE/Desktop/PRJ 351/project351/backend/chart/group_3_prediction_function.py', options).then(results => {
+            console.log(results);
+            res.send(results[1]);
           }).catch(err => {
             console.error(err);
             res.status(500).send('Error running prediction function');
           });
-        // const data = finnhubClient.companyProfile2({'symbol': stockName}, (error, data, response) => {
-        //     console.log(data)
-        //     console.log(response.body.country)
-        //     res.send({data, a})
-        // });
-    
-        // console.log('yo')
-        // res.send(data)
     } catch (error) {
-        res.status(500).send('Error getting company profile');
+        res.status(500).send('Error running prediction function');
     }
 }
 
 module.exports = {
-    getCompanyProfile
+    getCompanyProfile,
+    getPrediction
 }
