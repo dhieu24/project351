@@ -1,9 +1,10 @@
 import React from "react";
 import Chart from "../Chart/chart";
 import NavbarStock from "../Navbar/navbarstock"
-import { Container, Row, Col, Dropdown, Form } from 'react-bootstrap';
+import { Container, Row, Col, Dropdown, Form, Table } from 'react-bootstrap';
 
 import axios from 'axios'
+import './home.css'
 
 
 export default function Home(){
@@ -19,7 +20,8 @@ export default function Home(){
         phone: "",
         shareOutstanding: 0.0,
         ticker: "",
-        weburl: ""
+        weburl: "",
+        predictedPrice: 0.0
     })
     const [selectedStock, setSelectedStock] = React.useState('AAPL');
 
@@ -47,14 +49,14 @@ export default function Home(){
 
     return(
         <div>
-            <NavbarStock/>
+            <NavbarStock className="navbarStock"/>
 
             <br/>
             <div>   
                 <Container>
                     <Dropdown onSelect={handleDropdownSelect}>
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                        Stock Name
+                        Choose Stock Name
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -72,33 +74,72 @@ export default function Home(){
                     </Dropdown>
                 <Row>
                     <Col md={8} className="text-center">
-                        <Chart stock={selectedStock} />
+                        <div className='chart-container'>
+                            <Chart stock={selectedStock} />
+                        </div>
+
+                        <h2>
+                            Predicted Price: {companyData.predictedPrice}
+                        </h2>
                     </Col>
                     <Col md={4}>
-                        <div>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Country: </Form.Label>
-                            <Form.Control placeholder={companyData.country}/>
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Country: </Form.Label>
-                            <Form.Control placeholder={companyData.currency} disabled/>
-                        </Form.Group>
-
-                        <p>Currency: {companyData.currency}</p>
-                        <p>Exchange: {companyData.exchange}</p>
-                        <p>Name: {companyData.name}</p>
-                        <p>Industry: {companyData.finnhubIndustry}</p>
-                        <p>IPO: {companyData.ipo}</p>
-                        <img src={companyData.logo} alt="Company Logo"></img>
-
-                        <h5>Market Capitalization: {companyData.marketCapitalization}</h5>
-                        <h5>Phone: {companyData.phone}</h5>
-                        <h5>Web URL: {companyData.weburl}</h5>
-                        <h5>Ticker: {companyData.ticker}</h5>
-                        <h5>Share Outstanding: {companyData.shareOutstanding}</h5>
-                        <h6 className="display-6">Selected Stock: {selectedStock}</h6>
-                        </div>
+                        <Table striped bordered>
+                            <thead>
+                                <tr>
+                                <th colSpan={2}>{companyData.name}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <td>Predicted Price:</td>
+                                <td>{companyData.predictedPrice}</td>
+                                </tr>
+                                <tr>
+                                <td>Country:</td>
+                                <td>{companyData.country}</td>
+                                </tr>
+                                <tr>
+                                <td>Currency:</td>
+                                <td>{companyData.currency}</td>
+                                </tr>
+                                <tr>
+                                <td>Exchange:</td>
+                                <td>{companyData.exchange}</td>
+                                </tr>
+                                <tr>
+                                <td>Industry:</td>
+                                <td>{companyData.finnhubIndustry}</td>
+                                </tr>
+                                <tr>
+                                <td>IPO:</td>
+                                <td>{companyData.ipo}</td>
+                                </tr>
+                                <tr>
+                                <td>Market Capitalization:</td>
+                                <td>{companyData.marketCapitalization}</td>
+                                </tr>
+                                <tr>
+                                <td>Phone:</td>
+                                <td>{companyData.phone}</td>
+                                </tr>
+                                <tr>
+                                <td>Web URL:</td>
+                                <td>{companyData.weburl}</td>
+                                </tr>
+                                <tr>
+                                <td>Ticker:</td>
+                                <td>{companyData.ticker}</td>
+                                </tr>
+                                <tr>
+                                <td>Share Outstanding:</td>
+                                <td>{companyData.shareOutstanding}</td>
+                                </tr>
+                                <tr>
+                                <td>Selected Stock:</td>
+                                <td>{selectedStock}</td>
+                                </tr>
+                            </tbody>
+                        </Table>
                     </Col>
                 </Row>
             </Container>

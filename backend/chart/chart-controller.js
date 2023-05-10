@@ -10,16 +10,16 @@ const getStock = async (req, res) => {
         const stockName = req.params.stockName;
         console.log(stockName)
         const stocks = await StockModel.find({s: stockName}).sort({ t: -1 }).limit(1);
-
+        console.log(stocks)
         const formattedStocks = stocks.map(stock => ({
-            name: stock.s,
-            currentPrice: stock.p,
-            timestamp: stock.t,
-        }));
+             name: stock.s,
+             currentPrice: stock.p,
+             timestamp: stock.t,
+         }));
     
-        console.log('???????=====')
-        console.log(formattedStocks);
-        res.send(formattedStocks);
+         console.log('???????=====')
+         console.log(formattedStocks);
+         res.send(formattedStocks);
     } catch (error) {
         res.status(500).send('Error getting stock data');
     }

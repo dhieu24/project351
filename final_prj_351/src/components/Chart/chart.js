@@ -57,9 +57,9 @@ export default function Chart(props){
             <Plot
             data={[{ x: data.timestamp, y: data.price, type: 'scatter', mode: 'lines' }]}
             layout={{
-                title: "Real-time Stock",
-                xaxis: { range: [0, 30] },
-                yaxis: { range: [data.price * 0.8, data.price * 1.2] }
+                title: "Real-time Stock Price Visualization for " + stock,
+                xaxis: { title: "Seconds", range: [0, 10] },
+                yaxis: { title: "Price in USD", range: [data.price[data.price.length - 1] -1.0, data.price[data.price.length - 1] + 1.0] }
             }}
             />
     </div>

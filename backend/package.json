@@ -14,7 +14,8 @@
     "express": "^4.18.2",
     "finnhub": "^1.2.17",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.10.0"
+    "mongoose": "^6.10.0",
+    "python-shell": "^5.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

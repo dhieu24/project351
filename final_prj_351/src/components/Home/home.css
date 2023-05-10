@@ -1,0 +1,58 @@
+/* navbar styles */
+.navbarStock {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+  }
+  
+  /* dropdown styles */
+  #dropdown-basic {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+  }
+  
+  /* chart styles */
+  .chart-container {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  /* company data container styles */
+  .company-data-container {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+  }
+  
+  /* form control styles */
+  .form-control {
+    margin-bottom: 10px;
+  }
+  
+  /* image styles */
+  img {
+    max-width: 100%;
+  }
+  
+  /* headings styles */
+  h5, h6 {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .display-6 {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  /* paragraph styles */
+  p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  td:first-child {
+    font-weight: bold;
+  }
